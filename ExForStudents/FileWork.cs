@@ -29,6 +29,52 @@
         sw.Close();
     }
 
+    public static List<FileData> BubbleSortInt(List<FileData> list)
+    {
+        FileData temp;
+        for (int i = 0; i < list.Count; i++)
+        {
+            for (int j = i + 1; j < list.Count; j++)
+            {
+                if (list[i].Population > list[j].Population)
+                {
+                    temp = list[i];
+                    list[i] = list[j];
+                    list[j] = temp;
+                }
+            }
+        }
+        return list;
+    }
+
+    public static List<FileData> BubbleSortString(List<FileData> list)
+    {
+        FileData temp;
+        for (int i = 0; i < list.Count; i++)
+        {
+            for (int j = i + 1; j < list.Count; j++)
+            {
+                if (needToReOrder(list[i].Name, list[j].Name) == true)
+                { 
+                    temp = list[i];
+                    list[i] = list[j];
+                    list[j] = temp;
+                }
+            }
+        }
+        return list;
+    }
+
+    private static bool needToReOrder(string s1, string s2)
+    {
+        for (int i = 0; i < (s1.Length > s2.Length ? s2.Length : s1.Length); i++)
+        {
+            if (s1.ToCharArray()[i] < s2.ToCharArray()[i]) return false;
+            if (s1.ToCharArray()[i] > s2.ToCharArray()[i]) return true;
+        }
+        return false;
+    }
+
     public void FileToList()
     {
         string[] file = ReadFile();
