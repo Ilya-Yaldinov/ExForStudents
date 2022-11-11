@@ -15,12 +15,12 @@
     {
         string continent = ContinentChoise();
         DivideContinentToLists(continent);
-        var list = FileWork.BubbleSortInt(continentList);
+        var list = FileWork.BubbleSortPopulation(continentList);
         string fileName = FileNameInput();
         FileWork.WriteFile(list, fileName);
         char firstLetter = FirstLetterOfCapital();
         var selectedCountreyByCapital = SelectedCapitalsToList(firstLetter);
-        list = FileWork.BubbleSortString(selectedCountreyByCapital);
+        list = FileWork.BubbleSortCountry(selectedCountreyByCapital);
         fileName = FileNameInput();
         FileWork.WriteFile(list, fileName);
 

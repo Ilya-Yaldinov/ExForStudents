@@ -11,25 +11,33 @@
 
     public FileWork()
     {
-        this.path = "people.txt";
+        this.path = "countrey.txt";
     }
 
     private string[] ReadFile()
     {
         string[] file = File.ReadAllLines(this.path);
         header = file[0];
-        return file.Skip(1).ToArray();
+        string[] mainInfo = new string[file.Length - 1];
+        for(int i = 0; i < mainInfo.Length; i++)
+        {
+            mainInfo[i] = file[i+1];
+        }
+        return mainInfo;
     }
 
     public static void WriteFile(List<FileData> list, string fileName)
     {
         StreamWriter sw = new StreamWriter($"{fileName}.txt");
         sw.WriteLine(header);
-        list.ForEach(x => sw.WriteLine(x.ToString()));
+        foreach(FileData elem in list)
+        {
+            sw.WriteLine(elem.ToString());
+        }
         sw.Close();
     }
 
-    public static List<FileData> BubbleSortInt(List<FileData> list)
+    public static List<FileData> BubbleSortPopulation(List<FileData> list)
     {
         FileData temp;
         for (int i = 0; i < list.Count; i++)
@@ -47,14 +55,14 @@
         return list;
     }
 
-    public static List<FileData> BubbleSortString(List<FileData> list)
+    public static List<FileData> BubbleSortCountry(List<FileData> list)
     {
         FileData temp;
         for (int i = 0; i < list.Count; i++)
         {
             for (int j = i + 1; j < list.Count; j++)
             {
-                if (needToReOrder(list[i].Name, list[j].Name) == true)
+                if (needToReOrder(list[i].Country, list[j].Country) == true)
                 { 
                     temp = list[i];
                     list[i] = list[j];
@@ -80,13 +88,8 @@
         string[] file = ReadFile();
         foreach( string line in file)
         {
-            FileData fileData = new FileData();
             string[] elems = line.Split(';');
-            fileData.Name = elems[0];
-            fileData.Capital = elems[1];
-            fileData.Square = Convert.ToInt32(elems[2]);
-            fileData.Population = Convert.ToInt32(elems[3]);
-            fileData.Continent = elems[4];
+            FileData fileData = new FileData(elems[0], elems[1], Convert.ToInt32(elems[2]), Convert.ToInt32(elems[3]), elems[4]);
             CountryList.Add(fileData);
         }
     }
